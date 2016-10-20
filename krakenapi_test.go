@@ -48,8 +48,8 @@ func TestAssetPairs(t *testing.T) {
 		t.Errorf("AssetPairs() should not return an error, got %s", err)
 	}
 
-	if resp.XXBTZEUR.Base+resp.XXBTZEUR.Quote != XXBTZEUR {
-		t.Errorf("AssetPairs() should return valid response, got %+v", resp.XXBTZEUR)
+	if resp.Infos["XXBTZEUR"].Base+resp.Infos["XXBTZEUR"].Quote != XXBTZEUR {
+		t.Errorf("AssetPairs() should return valid response, got %+v", resp.Infos["XXBTZEUR"])
 	}
 }
 
@@ -59,8 +59,8 @@ func TestTicker(t *testing.T) {
 		t.Errorf("Ticker() should not return an error, got %s", err)
 	}
 
-	if resp.XXBTZEUR.OpeningPrice == 0 {
-		t.Errorf("Ticker() should return valid OpeningPrice, got %+v", resp.XXBTZEUR.OpeningPrice)
+	if resp.Infos["XXBTZEUR"].OpeningPrice == 0 {
+		t.Errorf("Ticker() should return valid OpeningPrice, got %+v", resp.Infos["XXBTZEUR"].OpeningPrice)
 	}
 }
 
