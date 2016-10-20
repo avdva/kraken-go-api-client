@@ -1,5 +1,6 @@
-package krakenapi
+package kraken
 
+// The following consts match pair names in kraken api.
 const (
 	XETHXXBT = "XETHXXBT"
 	XETHZCAD = "XETHZCAD"
@@ -22,8 +23,8 @@ const (
 	XXBTZUSD = "XXBTZUSD"
 )
 
-// KrakenResponse wraps the Kraken API JSON response
-type KrakenResponse struct {
+// Response wraps the Kraken API JSON response
+type Response struct {
 	Error  []string    `json:"error"`
 	Result interface{} `json:"result"`
 }
@@ -38,25 +39,7 @@ type TimeResponse struct {
 
 // AssetPairsResponse includes asset pair informations
 type AssetPairsResponse struct {
-	XETHXXBT AssetPairInfo
-	XETHZCAD AssetPairInfo
-	XETHZEUR AssetPairInfo
-	XETHZGBP AssetPairInfo
-	XETHZJPY AssetPairInfo
-	XETHZUSD AssetPairInfo
-	XLTCZCAD AssetPairInfo
-	XLTCZEUR AssetPairInfo
-	XLTCZUSD AssetPairInfo
-	XXBTXLTC AssetPairInfo
-	XXBTXNMC AssetPairInfo
-	XXBTXXDG AssetPairInfo
-	XXBTXXLM AssetPairInfo
-	XXBTXXRP AssetPairInfo
-	XXBTZCAD AssetPairInfo
-	XXBTZEUR AssetPairInfo
-	XXBTZGBP AssetPairInfo
-	XXBTZJPY AssetPairInfo
-	XXBTZUSD AssetPairInfo
+	Infos map[string]AssetPairInfo
 }
 
 // AssetPairInfo represents asset pair information
@@ -97,21 +80,7 @@ type AssetPairInfo struct {
 
 // AssetsResponse includes asset informations
 type AssetsResponse struct {
-	KFEE AssetInfo
-	XETH AssetInfo
-	XLTC AssetInfo
-	XNMC AssetInfo
-	XXBT AssetInfo
-	XXDG AssetInfo
-	XXLM AssetInfo
-	XXRP AssetInfo
-	XXVN AssetInfo
-	ZCAD AssetInfo
-	ZEUR AssetInfo
-	ZGBP AssetInfo
-	ZJPY AssetInfo
-	ZKRW AssetInfo
-	ZUSD AssetInfo
+	Infos map[string]AssetInfo
 }
 
 // AssetInfo represents an asset information
@@ -128,25 +97,7 @@ type AssetInfo struct {
 
 // TickerResponse includes the requested ticker pairs
 type TickerResponse struct {
-	XETHXXBT PairTickerInfo
-	XETHZCAD PairTickerInfo
-	XETHZEUR PairTickerInfo
-	XETHZGBP PairTickerInfo
-	XETHZJPY PairTickerInfo
-	XETHZUSD PairTickerInfo
-	XLTCZCAD PairTickerInfo
-	XLTCZEUR PairTickerInfo
-	XLTCZUSD PairTickerInfo
-	XXBTXLTC PairTickerInfo
-	XXBTXNMC PairTickerInfo
-	XXBTXXDG PairTickerInfo
-	XXBTXXLM PairTickerInfo
-	XXBTXXRP PairTickerInfo
-	XXBTZCAD PairTickerInfo
-	XXBTZEUR PairTickerInfo
-	XXBTZGBP PairTickerInfo
-	XXBTZJPY PairTickerInfo
-	XXBTZUSD PairTickerInfo
+	Infos map[string]PairTickerInfo
 }
 
 // PairTickerInfo represents ticker information for a pair
