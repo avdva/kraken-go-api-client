@@ -64,6 +64,16 @@ func TestTicker(t *testing.T) {
 	}
 }
 
+func TestDepth(t *testing.T) {
+	book, err := publicAPI.Depth(XXBTZUSD, 10)
+	if err != nil {
+		t.Errorf("Depth() should not return an error, got %s", err)
+	}
+	if len(book.Asks) != 10 || len(book.Bids) != 10 {
+		t.Errorf("order book size must be [10;10], not [%d, %d]", len(book.Asks), len(book.Bids))
+	}
+}
+
 func TestQueryTime(t *testing.T) {
 	result, err := publicAPI.Query("Time", map[string]string{})
 	resultKind := reflect.TypeOf(result).Kind()

@@ -3,7 +3,6 @@ package kraken
 import (
 	"encoding/json"
 
-	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"
 )
 
@@ -138,38 +137,14 @@ type OrderBookItem struct {
 
 // UnmarshalJSON takes a json array from kraken and converts it into an OrderBookItem.
 func (o *OrderBookItem) UnmarshalJSON(data []byte) error {
-	var arr []interface{}
-	var err error
-	if err = json.Unmarshal(data, &arr); err != nil {
-		return err
-	}
-	if len(arr) != 3 {
-		return errors.Errorf("arr len %d != 3", len(arr))
-	}
-	if price, ok := arr[0].(string); ok {
-		if o.Price, err = decimal.NewFromString(price); err != nil {
-			return errors.Wrap(err, "failed to parse price")
-		}
-	} else {
-		return errors.Errorf("price must be string, not %T", arr[0])
-	}
-	if amount, ok := arr[1].(string); ok {
-		if o.Amount, err = decimal.NewFromString(amount); err != nil {
-			return errors.Wrap(err, "failed to parse amount")
-		}
-	} else {
-		return errors.Errorf("amount must be string, not %T", arr[1])
-	}
-	if ts, ok := arr[2].(int); ok {
-		o.Ts = int64(ts)
-	} else {
-		return errors.Errorf("amount must be int, not %T", arr[2])
-	}
-	return nil
+	arr := []interface{}{&o.Price, &o.Amount, &o.Ts}
+	return json.Unmarshal(data, &arr)
 }
 
-type OrderBookResponse map[string]OrderBook
+// DepthResponse is a response from kraken to Depth request.
+type DepthResponse map[string]OrderBook
 
+// OrderBook contains top asks and bids.
 type OrderBook struct {
 	Asks []OrderBookItem
 	Bids []OrderBookItem

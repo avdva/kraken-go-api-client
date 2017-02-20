@@ -10,8 +10,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 const (
@@ -95,7 +98,7 @@ func (api *API) AssetPairs() (*AssetPairsResponse, error) {
 	return apr, nil
 }
 
-// Ticker returns the ticker for given comma seperated pais
+// Ticker returns the ticker for given comma seperated pairs
 func (api *API) Ticker(pairs ...string) (*TickerResponse, error) {
 	tr := &TickerResponse{}
 	_, err := api.queryPublic("Ticker", url.Values{
@@ -105,6 +108,21 @@ func (api *API) Ticker(pairs ...string) (*TickerResponse, error) {
 		return nil, err
 	}
 	return tr, nil
+}
+
+// Depth returns the order book for given pair and orders count.
+func (api *API) Depth(pair string, count int) (*OrderBook, error) {
+	dr := DepthResponse{}
+	_, err := api.queryPublic("Depth", url.Values{
+		"pair": {pair}, "count": {strconv.Itoa(count)},
+	}, &dr)
+	if err != nil {
+		return nil, err
+	}
+	if book, found := dr[pair]; found {
+		return &book, nil
+	}
+	return nil, errors.New("invalid response")
 }
 
 // Query sends a query to Kraken api for given method and parameters
